@@ -6,16 +6,19 @@ No caso do curso que eu presto, Ciência da computação, além do trabalho escr
 
 Qual a proposta desse semestre?
 -----------
-A definir
+Criar uma aplicaçao que faça autenticaçao biométrica que restrinja o acesso de digitais nao cadastradas.
 
 Como deverá funcionar?
 -----------
-A definir
+Deverá haver vários níveis de autenticaçao, nível 1, onde todos tem acesso, nível 2, começa a haver restriçoes para diretores de divisoes e nível 3 que há apenas a digital do ministro do meio ambiente
 
 TODO
 -----------
 - Definir como sera executado
 - Fazer Proof of comcept do conceito do semestre
+- Fazer o algoritmo funcionar
+- Construir a interface
+- Construir a hierarquia de níveis
 
 APSs anteriores:
 -----------
