@@ -20,6 +20,11 @@ TODO
 - Construir a interface
 - Construir a hierarquia de níveis
 
+Tools/Languages
+-----------
+- Python
+- OpenCV
+
 APSs anteriores:
 -----------
 * **APS 1º semestre de 2019:** [Comunicaçao em rede através de WebSocket](https://github.com/ogabriel/APS-UNIP-5sem)
