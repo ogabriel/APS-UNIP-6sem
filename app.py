@@ -2,9 +2,40 @@ import cv2
 import os
 import sys
 import numpy
+import pickle
 import matplotlib.pyplot as plt
 from enhance import image_enhance
 from skimage.morphology import skeletonize, thin
+
+
+# create former to pickle
+def define_former(images, path):
+	images_dict = {}
+	for img_name in images:
+		img = cv2.imread(path + img_name, cv2.IMREAD_GRAYSCALE)
+		kp, des = get_descriptors(img)
+		images_dict[img_name] = [kp, des, img]
+  
+	return images_dict
+
+
+# pickle
+# the array "images" must have the names of all images in the path/to/images directory
+def serializes(images, path, filename):
+	outfile = open("cache/" + filename, 'wb')
+	former = define_former(images, path) 
+	pickle.dump(former, outfile)
+	outfile.close()
+
+
+# unpickle
+# images_dict format:
+# images_dict = { image_name : [kp, des, img]}
+def deserializes(filename):
+	infile = open("cache/" + filename, 'rb')
+	images_dict = pickle.load(infile)
+	infile.close()
+	return images_dict
 
 
 def removedot(invertThin):
@@ -78,14 +109,18 @@ def get_descriptors(img):
 
 def main():
     image_name = sys.argv[1]
-    image_path = "database/samples/" + image_name
-    img1 = cv2.imread(image_path , cv2.IMREAD_GRAYSCALE)
-    kp1, des1 = get_descriptors(img1)
+    samples = helpers.deserializes('cache/samples_processed')
+    kp1, des1, img1 = samples[image_name][0], samples[image_name][1], samples[image_name][2]
+    # image_path = "database/samples/" + image_name
+    # img1 = cv2.imread(image_path , cv2.IMREAD_GRAYSCALE)
+    # kp1, des1 = get_descriptors(img1)
 
     image_name = sys.argv[2]
-    image_path = "database/permitted/" + image_name
-    img2 = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    kp2, des2 = get_descriptors(img2)
+    permitted = helpers.deserializes('cache/permitted_processed')
+    kp2, des2, img2 = permitted[image_name][0], permitted[image_name][1], permitted[image_name][2]
+    # image_path = "database/permitted/" + image_name
+    # img2 = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    # kp2, des2 = get_descriptors(img2)
 
     # Matching between descriptors
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
