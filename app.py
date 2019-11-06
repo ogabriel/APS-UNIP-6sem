@@ -23,14 +23,21 @@ def define_former(images, path):
 def keypoint_to_tuple(kp, des):
   temp = []
   for kp_obj in kp:
-    temp.append((kp_obj.pt, kp_obj.size, kp_obj.angle, kp_obj.response, kp_obj.octave, 
-        kp_obj.class_id))
+    temp.append((kp_obj.pt, kp_obj.size, kp_obj.angle, kp_obj.response, kp_obj.octave, kp_obj.class_id))
   temp.append(des)
   return temp
 
 
-# def tuple_to_keypoints():
+def tuple_to_keypoints(img_dict, img_name):
+  kp_list = []
+  des = img_dict[img_name][0].pop()
+  img = img_dict[img_name][1]
 
+  for kp in img_dict[img_name][0]:
+    temp_feature = cv2.KeyPoint(x=kp[0][0],y=kp[0][1],_size=kp[1], _angle=kp[2], _response=kp[3], _octave=kp[4], _class_id=kp[5])
+    kp_list.append(temp_feature)
+
+  return (kp_list, des, img)
 
 
 # pickle
@@ -45,12 +52,14 @@ def serializes(images, path, filename):
 # unpickle
 # images_dict format:
 # images_dict = { image_name : [kp, des, img]}
-def deserializes(filename):
+def deserializes(filename, image_name):
 	infile = open("templates/" + filename, 'rb')
 	images_dict = pickle.load(infile)
 	infile.close()
-	print(images_dict)
-	return images_dict
+	kp, des, img = tuple_to_keypoints(images_dict, image_name)
+	
+	return (kp, des, img)
+  
 
 
 def removedot(invertThin):
@@ -124,15 +133,10 @@ def get_descriptors(img):
 
 def main():
     image_name = sys.argv[1]
-    samples = deserializes('templates/sample_templates')
-    kp1, des1, img1 = samples[image_name][0], samples[image_name][1], samples[image_name][2]
-    # image_path = "database/samples/" + image_name
-    # img1 = cv2.imread(image_path , cv2.IMREAD_GRAYSCALE)
-    # kp1, des1 = get_descriptors(img1)
+    kp1, des1, img1 = deserializes('samples_template', image_name)
 
     image_name = sys.argv[2]
-    permitted = helpers.deserializes('templates/permitted_templates')
-    kp2, des2, img2 = permitted[image_name][0], permitted[image_name][1], permitted[image_name][2]
+    kp2, des2, img2 = deserializes('permitted_templates', image_name)
     # image_path = "database/permitted/" + image_name
     # img2 = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     # kp2, des2 = get_descriptors(img2)
