@@ -14,15 +14,29 @@ def define_former(images, path):
 	for img_name in images:
 		img = cv2.imread(path + img_name, cv2.IMREAD_GRAYSCALE)
 		kp, des = get_descriptors(img)
-		images_dict[img_name] = [kp, des, img]
+		kp_temp = keypoint_to_tuple(kp, des)
+		images_dict[img_name] = [kp_temp, img]
   
 	return images_dict
+
+
+def keypoint_to_tuple(kp, des):
+  temp = []
+  for kp_obj in kp:
+    temp.append((kp_obj.pt, kp_obj.size, kp_obj.angle, kp_obj.response, kp_obj.octave, 
+        kp_obj.class_id))
+  temp.append(des)
+  return temp
+
+
+# def tuple_to_keypoints():
+
 
 
 # pickle
 # the array "images" must have the names of all images in the path/to/images directory
 def serializes(images, path, filename):
-	outfile = open("cache/" + filename, 'wb')
+	outfile = open("templates/" + filename, 'wb')
 	former = define_former(images, path) 
 	pickle.dump(former, outfile)
 	outfile.close()
@@ -32,9 +46,10 @@ def serializes(images, path, filename):
 # images_dict format:
 # images_dict = { image_name : [kp, des, img]}
 def deserializes(filename):
-	infile = open("cache/" + filename, 'rb')
+	infile = open("templates/" + filename, 'rb')
 	images_dict = pickle.load(infile)
 	infile.close()
+	print(images_dict)
 	return images_dict
 
 
@@ -109,14 +124,14 @@ def get_descriptors(img):
 
 def main():
     image_name = sys.argv[1]
-    samples = helpers.deserializes('cache/samples_processed')
+    samples = deserializes('templates/sample_templates')
     kp1, des1, img1 = samples[image_name][0], samples[image_name][1], samples[image_name][2]
     # image_path = "database/samples/" + image_name
     # img1 = cv2.imread(image_path , cv2.IMREAD_GRAYSCALE)
     # kp1, des1 = get_descriptors(img1)
 
     image_name = sys.argv[2]
-    permitted = helpers.deserializes('cache/permitted_processed')
+    permitted = helpers.deserializes('templates/permitted_templates')
     kp2, des2, img2 = permitted[image_name][0], permitted[image_name][1], permitted[image_name][2]
     # image_path = "database/permitted/" + image_name
     # img2 = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
