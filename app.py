@@ -136,7 +136,7 @@ def main():
     kp1, des1, img1 = deserializes('samples_template', image_name)
 
     image_name = sys.argv[2]
-    kp2, des2, img2 = deserializes('permitted_templates', image_name)
+    kp2, des2, img2 = deserializes('permitted_template', image_name)
     # image_path = "database/permitted/" + image_name
     # img2 = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     # kp2, des2 = get_descriptors(img2)
