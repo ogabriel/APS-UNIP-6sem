@@ -137,9 +137,6 @@ def main():
 
     image_name = sys.argv[2]
     kp2, des2, img2 = deserializes('permitted_template', image_name)
-    # image_path = "database/permitted/" + image_name
-    # img2 = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    # kp2, des2 = get_descriptors(img2)
 
     # Matching between descriptors
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
