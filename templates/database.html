@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Banco de dados</title>
+{% endblock %}
+
+{% block body %}
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Localização</th>
+            <th>Agrotóxico</th>
+            <th>Categoria</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for result in results %}
+        <tr>
+            <td>{{ result.firstname }}</td>
+            <td>{{ result.lastname }}</td>
+            <td>{{ result.localization }}</td>
+            <td>{{ result.pesticides }}</td>
+            <td>{{ result.category }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
