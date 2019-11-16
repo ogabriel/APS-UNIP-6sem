@@ -77,40 +77,57 @@ def get_descriptors(img):
 
 
 def main():
-    image_name = sys.argv[1]
-    image_path = "database/samples/" + image_name
-    img1 = cv2.imread(image_path , cv2.IMREAD_GRAYSCALE)
-    kp1, des1 = get_descriptors(img1)
+    des = get_des_sample(sys.argv[1])
 
-    image_name = sys.argv[2]
-    image_path = "database/permitted/" + image_name
-    img2 = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    kp2, des2 = get_descriptors(img2)
-
-    # Matching between descriptors
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-    matches = sorted(bf.match(des1, des2), key=lambda match: match.distance)
-    # Plot keypoints
-    img4 = cv2.drawKeypoints(img1, kp1, outImage=None)
-    img5 = cv2.drawKeypoints(img2, kp2, outImage=None)
-    f, axarr = plt.subplots(1, 2)
-    axarr[0].imshow(img4)
-    axarr[1].imshow(img5)
-    plt.show()
-    # Plot matches
-    img3 = cv2.drawMatches(img1, kp1, img2, kp2, matches, flags=2, outImg=None)
-    plt.imshow(img3)
-    plt.show()
 
-    # Calculate score
-    score = 0
-    for match in matches:
-        score += match.distance
-    score_threshold = 33
-    if score / len(matches) < score_threshold:
-        print("Fingerprint matches.")
+    name = comparisons_with_permitted_images(des, bf)
+
+    if name:
+        print("The owner of the fingerprint is: " + name)
     else:
-        print("Fingerprint does not match.")
+        print("Not found in the database")
+
+
+def comparisons_with_permitted_images(sample_fingerprint, bf):
+    score_threshold = 33
+
+    for fingerprint in fingerprint_database():
+        permitted_fingerprint = get_des_permitted(fingerprint["fingerprint"])
+
+        matches = sorted(bf.match(sample_fingerprint, permitted_fingerprint), key=lambda match: match.distance)
+
+        print(fingerprint["fingerprint"])
+
+        score = 0
+        for match in matches:
+            score += match.distance
+
+        print(score)
+        if score / len(matches) < score_threshold:
+            return fingerprint["name"]
+
+
+def get_des_permitted(image_name):
+    image_path = "database/permitted/" + image_name
+
+    return get_des(image_path)
+
+
+def get_des_sample(image_name):
+    image_path = "database/samples/" + image_name
+
+    return get_des(image_path)
+
+
+def get_des(image_path):
+    if os.path.exists(image_path):
+        img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        kp, des = get_descriptors(img)
+
+        return des
+    else:
+        raise BaseException
 
 
 if __name__ == "__main__":
@@ -118,3 +135,16 @@ if __name__ == "__main__":
         main()
     except BaseException:
         raise
+
+
+def fingerprint_database():
+    database = (
+                    {"name": "Dave", "fingerprint": "101_1.tif"},
+                    {"name": "John", "fingerprint": "102_1.tif"},
+                    {"name": "Foo", "fingerprint": "103_1.tif"},
+                    {"name": "Bar", "fingerprint": "104_1.tif"},
+                    {"name": "Tonico", "fingerprint": "105_1.tif"},
+                    {"name": "Tinoco", "fingerprint": "106_1.tif"}
+                )
+
+    return database
