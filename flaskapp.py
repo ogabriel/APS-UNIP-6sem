@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -9,9 +9,13 @@ db = SQLAlchemy(app)
 farmers = db.Table('farmers', db.metadata, autoload=True, autoload_with=db.engine)
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        return redirect('/database/')
+        pass
+    else:
+        return render_template('index.html')
 
 
 @app.route('/database/')
