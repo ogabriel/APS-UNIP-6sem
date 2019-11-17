@@ -19,7 +19,7 @@ pesticide_list = ["2,4-D", "Metomil", "Clorpirifós", "Diazinona", "Acefato", "A
 conn = sqlite3.connect('pesticides.db')
 cursor = conn.cursor()
 
-#cursor.execute("DROP TABLE farmers")
+cursor.execute("DROP TABLE farmers")
 cursor.execute("""CREATE TABLE farmers (
             id integer PRIMARY KEY,
             firstname text,
@@ -37,22 +37,22 @@ conn.commit()
 
 
 def populate():
-    for i in range(100):
-        if i < 10:
+    for i in range(121):
+        if i < 20:
             cursor.execute("INSERT INTO farmers VALUES (?, ?, ?, ?, ?, ?)", (i+1, random.choice(first_name_list),
                                                                        random.choice(last_name_list),
                                                                        random.choice(localization_list),
                                                                        pesticide_list[random.randint(0, 1)],
                                                                         "Categoria I"))
             conn.commit()
-        elif 10 < i < 30:
+        elif 20 < i < 61:
             cursor.execute("INSERT INTO farmers VALUES (?, ?, ?, ?, ?, ?)", (i+1, random.choice(first_name_list),
                                                                        random.choice(last_name_list),
                                                                        random.choice(localization_list),
                                                                        pesticide_list[random.randint(2, 3)],
                                                                        "Categoria II"))
             conn.commit()
-        elif i >= 30:
+        elif i >= 61:
             cursor.execute("INSERT INTO farmers VALUES (?, ?, ?, ?, ?, ?)", (i+1, random.choice(first_name_list),
                                                                        random.choice(last_name_list),
                                                                        random.choice(localization_list),
