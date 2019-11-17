@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Banco de dados</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Localização</th>
+                    <th>Agrotóxico</th>
+                    <th>Categoria</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for result in results %}
+                {% if result.category == "Categoria I" %}
+                    <tr class="danger">
+                        <td>{{ result.firstname }}</td>
+                        <td>{{ result.lastname }}</td>
+                        <td>{{ result.localization }}</td>
+                        <td>{{ result.pesticide }}</td>
+                        <td>{{ result.category }}</td>
+                    </tr>
+                {% elif result.category == "Categoria II" %}
+                    <tr class="info">
+                        <td>{{ result.firstname }}</td>
+                        <td>{{ result.lastname }}</td>
+                        <td>{{ result.localization }}</td>
+                        <td>{{ result.pesticide }}</td>
+                        <td>{{ result.category }}</td>
+                    </tr>
+                {% else %}
+                    <tr class="success">
+                        <td>{{ result.firstname }}</td>
+                        <td>{{ result.lastname }}</td>
+                        <td>{{ result.localization }}</td>
+                        <td>{{ result.pesticide }}</td>
+                        <td>{{ result.category }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

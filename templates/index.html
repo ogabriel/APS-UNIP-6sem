@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Ministério da Fazenda - Login</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <div class="login-form">
+        <form action="" method="POST">
+            <h2>Bem-vindo</h2>
+            <div class="form-group">
+                <label>Usuário</label>
+                <input type="text" class="form-control" required="required">
+            </div>
+            <div class="form-group">
+                <label>Impressão Digital</label>
+            </div>
+            <div class="form-group clearfix center-block">
+                <button type="submit" class="btn btn-primary login-btn btn-block">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
