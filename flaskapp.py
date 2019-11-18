@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
+import app as fingerprint
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pesticides.db'
@@ -12,15 +13,22 @@ farmers = db.Table('farmers', db.metadata, autoload=True, autoload_with=db.engin
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        return redirect('/database/')
-        pass
+        login_content = request.form['user']
+        print(login_content)
+        user = fingerprint.main(login_content)
+        if user:
+            session["user"] = user
+            return redirect(url_for('database'))
+        else:
+            flash('Impressão digital incorreta ou não autorizada!')
     else:
         return render_template('index.html')
 
 
 @app.route('/database/')
 def database():
-    results = db.session.query(farmers).all()
+    user = session.get("user")
+    results = db.engine.execute('SELECT * FROM farmers')
     return render_template('database.html', results=results)
 
 

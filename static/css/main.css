@@ -11,7 +11,7 @@ h2 {
 }
 
 .login-form {
-	width: 640px;
+	width: 740px;
 	margin: 30px auto;
 }
 
@@ -30,4 +30,22 @@ h2 {
 .btn {
 	font-size: 15px;
 	font-weight: bold;
+}
+
+[type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+[type=radio] + img {
+    cursor: pointer;
+}
+
+[type=radio]:checked + img {
+    box-shadow: 2px 2px 5px green;
+}
+.fingerprint {
+    width: 100px;
 }

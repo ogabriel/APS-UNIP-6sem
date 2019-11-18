@@ -76,8 +76,8 @@ def get_descriptors(img):
     return (keypoints, des)
 
 
-def main():
-    des = get_des_sample(sys.argv[1])
+def main(des):
+    des = get_des_sample(des)
 
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
@@ -85,8 +85,10 @@ def main():
 
     if name:
         print("The owner of the fingerprint is: " + name)
+        return name
     else:
         print("Not found in the database")
+        return None
 
 
 def comparisons_with_permitted_images(sample_fingerprint, bf):
