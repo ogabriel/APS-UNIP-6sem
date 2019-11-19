@@ -132,13 +132,6 @@ def get_des(image_path):
         raise BaseException
 
 
-if __name__ == "__main__":
-    try:
-        main()
-    except BaseException:
-        raise
-
-
 def fingerprint_database():
     database = (
                     {"name": "Dave", "fingerprint": "101_1.tif"},
@@ -150,3 +143,10 @@ def fingerprint_database():
                 )
 
     return database
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except BaseException:
+        raise
