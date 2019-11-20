@@ -103,8 +103,10 @@ def comparisons_with_permitted_images(sample_fingerprint, bf):
         for match in matches:
             score += match.distance
 
-        print(score)
-        if score / len(matches) < score_threshold:
+        actual_score = score / len(matches)
+        print(actual_score)
+
+        if actual_score < score_threshold:
             return fingerprint["name"]
 
 
