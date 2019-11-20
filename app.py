@@ -76,17 +76,16 @@ def get_descriptors(img):
     return (keypoints, des)
 
 
-def main():
-    des = get_des_sample(sys.argv[1])
+def main(image_path):
+    des = get_des_input(image_path)
 
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-
     name = comparisons_with_permitted_images(des, bf)
 
     if name:
-        print("The owner of the fingerprint is: " + name)
+        return "The owner of the fingerprint is: " + name
     else:
-        print("Not found in the database")
+        return "Not found in the database"
 
 
 def comparisons_with_permitted_images(sample_fingerprint, bf):
@@ -116,9 +115,7 @@ def get_des_permitted(image_name):
     return get_des(image_path)
 
 
-def get_des_sample(image_name):
-    image_path = "database/samples/" + image_name
-
+def get_des_input(image_path):
     return get_des(image_path)
 
 
@@ -129,7 +126,7 @@ def get_des(image_path):
 
         return des
     else:
-        raise BaseException
+        raise BaseException("file " + image_path + "does't exist")
 
 
 def fingerprint_database():
