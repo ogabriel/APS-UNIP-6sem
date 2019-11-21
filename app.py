@@ -81,22 +81,22 @@ def main(image_path):
     des = get_des_input(image_path)
 
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-    name = comparisons_with_permitted_images(des, bf)
+    user = comparisons_with_permitted_images(des, bf)
 
-    if name:
-        return "The owner of the fingerprint is: " + name
+    if user:
+        return user
     else:
-        return "Not found in the database"
+        return False
 
 
 def comparisons_with_permitted_images(sample_fingerprint, bf):
     score_threshold = 33
 
-    for fingerprint in fingerprint_database():
-        permitted_fingerprint = get_des_permitted(fingerprint["fingerprint"])
+    for user in users_authorization_and_authentication():
+        permitted_fingerprint = get_des_permitted(user["fingerprint"])
         matches = sorted(bf.match(sample_fingerprint, permitted_fingerprint), key=lambda match: match.distance)
 
-        print(fingerprint["fingerprint"])
+        print(user["fingerprint"])
 
         score = 0
         for match in matches:
@@ -106,7 +106,7 @@ def comparisons_with_permitted_images(sample_fingerprint, bf):
         print(actual_score)
 
         if actual_score < score_threshold:
-            return fingerprint["name"]
+            return user
 
 
 def get_des_permitted(image_name):
@@ -145,17 +145,17 @@ def get_des(image_path):
         raise BaseException("file " + image_path + "does't exist")
 
 
-def fingerprint_database():
+def users_authorization_and_authentication():
     database = (
-                    {"name": "101", "fingerprint": "101_1.tif"},
-                    {"name": "102", "fingerprint": "102_1.tif"},
-                    {"name": "103", "fingerprint": "103_1.tif"},
-                    {"name": "104", "fingerprint": "104_1.tif"},
-                    {"name": "105", "fingerprint": "105_1.tif"},
-                    {"name": "106", "fingerprint": "106_1.tif"},
-                    {"name": "107", "fingerprint": "107_1.tif"},
-                    {"name": "108", "fingerprint": "108_1.tif"}
-                )
+            {"name": "101", "fingerprint": "101_1.tif", "level": 1},
+            {"name": "102", "fingerprint": "102_1.tif", "level": 1},
+            {"name": "103", "fingerprint": "103_1.tif", "level": 1},
+            {"name": "104", "fingerprint": "104_1.tif", "level": 1},
+            {"name": "105", "fingerprint": "105_1.tif", "level": 2},
+            {"name": "106", "fingerprint": "106_1.tif", "level": 2},
+            {"name": "107", "fingerprint": "107_1.tif", "level": 2},
+            {"name": "108", "fingerprint": "108_1.tif", "level": 3}
+        )
 
     return database
 

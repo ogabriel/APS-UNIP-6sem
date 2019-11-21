@@ -43,21 +43,21 @@ def populate():
                                                                        random.choice(last_name_list),
                                                                        random.choice(localization_list),
                                                                        pesticide_list[random.randint(0, 1)],
-                                                                        "Categoria I"))
+                                                                        "1"))
             conn.commit()
         elif 20 < i < 61:
             cursor.execute("INSERT INTO farmers VALUES (?, ?, ?, ?, ?, ?)", (i+1, random.choice(first_name_list),
                                                                        random.choice(last_name_list),
                                                                        random.choice(localization_list),
                                                                        pesticide_list[random.randint(2, 3)],
-                                                                       "Categoria II"))
+                                                                       "2"))
             conn.commit()
         elif i >= 61:
             cursor.execute("INSERT INTO farmers VALUES (?, ?, ?, ?, ?, ?)", (i+1, random.choice(first_name_list),
                                                                        random.choice(last_name_list),
                                                                        random.choice(localization_list),
                                                                        pesticide_list[random.randint(4, 9)],
-                                                                       "Categoria III"))
+                                                                       "3"))
             conn.commit()
 
 

@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+ {% block head %}
+<title>Ministério da Fazenda - Banco de dados</title>
+{% endblock %}
+
+ {% block body %}
+<div class="content">
+    <div class="container">
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-link navbar-btn navbar-link">
+                Log off
+            </button>
+        </form>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Bem vindo</div>
+            <div class="panel-body">{{ username }}</div>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Localização</th>
+                    <th>Agrotóxico</th>
+                    <th>Categoria</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for result in results %}
+                {% if result.category == "Categoria I" %}
+                    <tr class="danger">
+                        <td>{{ result.firstname }}</td>
+                        <td>{{ result.lastname }}</td>
+                        <td>{{ result.localization }}</td>
+                        <td>{{ result.pesticide }}</td>
+                        <td>{{ result.category }}</td>
+                    </tr>
+                {% elif result.category == "Categoria II" %}
+                    <tr class="info">
+                        <td>{{ result.firstname }}</td>
+                        <td>{{ result.lastname }}</td>
+                        <td>{{ result.localization }}</td>
+                        <td>{{ result.pesticide }}</td>
+                        <td>{{ result.category }}</td>
+                    </tr>
+                {% else %}
+                    <tr class="success">
+                        <td>{{ result.firstname }}</td>
+                        <td>{{ result.lastname }}</td>
+                        <td>{{ result.localization }}</td>
+                        <td>{{ result.pesticide }}</td>
+                        <td>{{ result.category }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+ {% endblock %}
