@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import app as fingerprint
 
 app = Flask(__name__)
+app.secret_key = 'ramdom string'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pesticides.db'
 
 db = SQLAlchemy(app)
@@ -21,6 +22,7 @@ def index():
             return redirect(url_for('database'))
         else:
             flash('Impressão digital incorreta ou não autorizada!')
+            return redirect(url_for('index'))
     else:
         return render_template('index.html')
 
