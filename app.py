@@ -115,12 +115,12 @@ def get_des_permitted(image_name):
     image_desc = None
 
     if os.path.exists(image_pickle):
-        print("unpicked")
+        print("unpickled")
         pickle_file = open(image_pickle, 'rb')
         image_desc = pickle.load(pickle_file)
         pickle_file.close
     else:
-        print("picked")
+        print("pickled")
         image_path = "database/permitted/" + image_name
         image_desc = get_des(image_path)
         pickle_file = open(image_pickle, 'wb')
