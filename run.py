@@ -70,9 +70,12 @@ def logout():
 def farmers():
     username = session.get('name')
     level = session.get('level')
+    levels = [*range(1, level + 1)]
+    levels_string = str(levels).replace('[','(').replace(']',')')
+
 
     if username and level:
-        results = db.engine.execute('SELECT * FROM farmers WHERE category=' + str(level))
+        results = db.engine.execute('SELECT * FROM farmers WHERE category in' + levels_string)
         return render_template('farmers.html', results=results, username=username)
     else:
         return redirect('/login', code=302)

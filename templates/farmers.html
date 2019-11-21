@@ -30,16 +30,16 @@
             </thead>
             <tbody>
             {% for result in results %}
-                {% if result.category == "Categoria I" %}
-                    <tr class="danger">
+                {% if result.category == "3" %}
+                    <tr class="table-danger">
                         <td>{{ result.firstname }}</td>
                         <td>{{ result.lastname }}</td>
                         <td>{{ result.localization }}</td>
                         <td>{{ result.pesticide }}</td>
                         <td>{{ result.category }}</td>
                     </tr>
-                {% elif result.category == "Categoria II" %}
-                    <tr class="info">
+                {% elif result.category == "2" %}
+                    <tr class="table-info">
                         <td>{{ result.firstname }}</td>
                         <td>{{ result.lastname }}</td>
                         <td>{{ result.localization }}</td>
@@ -47,7 +47,7 @@
                         <td>{{ result.category }}</td>
                     </tr>
                 {% else %}
-                    <tr class="success">
+                    <tr class="table-success">
                         <td>{{ result.firstname }}</td>
                         <td>{{ result.lastname }}</td>
                         <td>{{ result.localization }}</td>
