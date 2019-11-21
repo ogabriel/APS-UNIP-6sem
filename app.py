@@ -93,7 +93,6 @@ def comparisons_with_permitted_images(sample_fingerprint, bf):
 
     for fingerprint in fingerprint_database():
         permitted_fingerprint = get_des_permitted(fingerprint["fingerprint"])
-
         matches = sorted(bf.match(sample_fingerprint, permitted_fingerprint), key=lambda match: match.distance)
 
         print(fingerprint["fingerprint"])
@@ -131,12 +130,14 @@ def get_des(image_path):
 
 def fingerprint_database():
     database = (
-                    {"name": "Dave", "fingerprint": "101_1.tif"},
-                    {"name": "John", "fingerprint": "102_1.tif"},
-                    {"name": "Foo", "fingerprint": "103_1.tif"},
-                    {"name": "Bar", "fingerprint": "104_1.tif"},
-                    {"name": "Tonico", "fingerprint": "105_1.tif"},
-                    {"name": "Tinoco", "fingerprint": "106_1.tif"}
+                    {"name": "101", "fingerprint": "101_1.tif"},
+                    {"name": "102", "fingerprint": "102_1.tif"},
+                    {"name": "103", "fingerprint": "103_1.tif"},
+                    {"name": "104", "fingerprint": "104_1.tif"},
+                    {"name": "105", "fingerprint": "105_1.tif"},
+                    {"name": "106", "fingerprint": "106_1.tif"},
+                    {"name": "107", "fingerprint": "107_1.tif"},
+                    {"name": "108", "fingerprint": "108_1.tif"}
                 )
 
     return database
@@ -144,6 +145,6 @@ def fingerprint_database():
 
 if __name__ == "__main__":
     try:
-        main()
+        main(sys.argv[1])
     except BaseException:
         raise
