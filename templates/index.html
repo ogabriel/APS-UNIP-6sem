@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block body %}
-<div class="content">
+<div id="loader" style="visibility: hidden; z-index: 100; position: absolute; top: 20%; left: 50%;">
+  <!-- substituir o src -->
+  <img src="https://mk0supsystic186fa3rj.kinstacdn.com/wp-content/uploads/2018/09/upload-file-feature-contact-form.gif" width="50px">
+</div>
+<div id="content" class="content">
     <div class="login-form">
         <form action="/" method="POST">
             <h2>Bem-vindo</h2>
@@ -39,7 +43,7 @@
                 </label>
             </div>
             <div class="form-group clearfix center-block">
-                <button type="submit" class="btn btn-primary login-btn btn-block">Login</button>
+                <button type="submit" id="button" class="btn btn-primary login-btn btn-block">Login</button>
             </div>
         </form>
     </div>

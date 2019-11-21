@@ -22,5 +22,18 @@
     </div>
 
     {% block body %}{% endblock %}
+
+    <script type="text/javascript">//![CDATA[
+      buttonElement = document.querySelector("button#button");
+
+      buttonElement.addEventListener("click", function(){
+        let loaderElement = document.querySelector("div#loader");
+        let contentElement = document.querySelector("div#content");
+
+        contentElement.style.opacity = "0.2";
+        loaderElement.style.visibility = "visible";
+      });
+    //]]>
+    </script>
 </body>
 </html>
