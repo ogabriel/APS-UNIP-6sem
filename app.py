@@ -1,5 +1,6 @@
 import cv2
 import os
+import pickle
 import sys
 import numpy
 import matplotlib.pyplot as plt
@@ -109,12 +110,28 @@ def comparisons_with_permitted_images(sample_fingerprint, bf):
 
 
 def get_des_permitted(image_name):
-    image_path = "database/permitted/" + image_name
+    image_pickle = "database/pickles/" + image_name
 
-    return get_des(image_path)
+    image_desc = None
+
+    if os.path.exists(image_pickle):
+        print("unpicked")
+        pickle_file = open(image_pickle, 'rb')
+        image_desc = pickle.load(pickle_file)
+        pickle_file.close
+    else:
+        print("picked")
+        image_path = "database/permitted/" + image_name
+        image_desc = get_des(image_path)
+        pickle_file = open(image_pickle, 'wb')
+        pickle.dump(image_desc, pickle_file)
+        pickle_file.close
+
+    return image_desc
 
 
 def get_des_input(image_path):
+    print(image_path)
     return get_des(image_path)
 
 
