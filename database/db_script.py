@@ -10,11 +10,7 @@ localization_list = ["Sorriso - MT", "São Miguel Arcanjo - SP", "Marialva - PR"
                      "Maués - AM", "Atibaia - SP", "Igarapé-Mirim - PA", "Piedade - SP", "Ituporanga - SC",
                      "São Joaquim - SC", "Reserva - PR", "São Desidério - BA", "Uberaba - MG"]
 pesticide_list = ["2,4-D", "Metomil", "Clorpirifós", "Diazinona", "Acefato", "Atrazina", "Diuron", "Glifosato",
-                  "Melationa", "Mancozebe"]  # 10/30/40
-
-# Class 1: 2,4-D; Metomil;
-# Class 2: Clorpirifós; Diazinona
-# Class 3 & 4: Acefato, Atrazina, Diuron, Glifosato, Malationa, Mancozebe
+                  "Malationa", "Mancozebe"]
 
 conn = sqlite3.connect('pesticides.db')
 cursor = conn.cursor()
@@ -70,10 +66,3 @@ cursor.execute("SELECT * FROM farmers")
 print(cursor.fetchall())
 conn.commit()
 conn.close()
-
-# def populate():
-#    for i in 99:
-#        if i < 9:
-
-#        cursor.execute("INSERT INTO farmers VALUES (?, ?, ?)", (random.choice(first_name_list),
-#                       random.choice(last_name_list), random.choice(localization_list)))
