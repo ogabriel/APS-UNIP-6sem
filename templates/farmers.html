@@ -1,22 +1,29 @@
 {% extends 'layout.html' %}
 
- {% block head %}
+{% block head %}
 <title>Ministério da Fazenda - Banco de dados</title>
 {% endblock %}
 
- {% block body %}
+{% block body %}
 <div class="content">
     <div class="container">
-        <form action="/logout" method="post">
-            <button type="submit" class="btn btn-link navbar-btn navbar-link">
-                Log off
-            </button>
-        </form>
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Bem vindo: {{ username }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Nível de segurança: {{ level }}</a>
+            </li>
+            <li class="nav-item">
+                <form action="/logout" method="post">
+                    <button type="submit" class="btn btn-link navbar-btn navbar-link">
+                        Log off
+                    </button>
+                </form>
+            </li>
+        </ul>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">Bem vindo</div>
-            <div class="panel-body">{{ username }}</div>
-        </div>
+        <br>
 
         <table class="table table-hover">
             <thead>
@@ -61,4 +68,4 @@
     </div>
 </div>
 
- {% endblock %}
+{% endblock %}

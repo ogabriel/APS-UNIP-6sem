@@ -26,36 +26,36 @@ def index():
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
-
-
-@app.route('/login', methods=['POST'])
-def login_post():
     username = session.get('name')
     level = session.get('level')
 
     if username and level:
         return redirect('/farmers', code=302)
     else:
-        file = request.files['file']
-        filename = file.filename
+        return render_template('login.html')
 
-        if re.match(r'.*\.(png|tif|jpg|gif|tiff|jpeg)$', filename):
-            image_path = os.path.join('database/uploaded', filename)
-            file.save(image_path)
 
-            user = login_user.main(image_path)
-            if user:
-                session['name'] = user['name']
-                session['level'] = user['level']
+@app.route('/login', methods=['POST'])
+def login_post():
+    file = request.files['file']
+    filename = file.filename
 
-                return redirect('/farmers')
-            else:
-                flash('Impressão digital incorreta ou não autorizada!')
-                return redirect('/login', code=302)
+    if re.match(r'.*\.(png|tif|gif|tiff)$', filename):
+        image_path = os.path.join('database/uploaded', filename)
+        file.save(image_path)
+
+        user = login_user.main(image_path)
+        if user:
+            session['name'] = user['name']
+            session['level'] = user['level']
+
+            return redirect('/farmers')
         else:
             flash('Impressão digital incorreta ou não autorizada!')
             return redirect('/login', code=302)
+    else:
+        flash('Impressão digital incorreta ou não autorizada!')
+        return redirect('/login', code=302)
 
 
 @app.route('/logout', methods=['POST'])
@@ -70,14 +70,16 @@ def logout():
 def farmers():
     username = session.get('name')
     level = session.get('level')
-    levels = [*range(1, level + 1)]
-    levels_string = str(levels).replace('[','(').replace(']',')')
 
 
     if username and level:
+        levels = [*range(1, level + 1)]
+        levels_string = str(levels).replace('[','(').replace(']',')')
+
         results = db.engine.execute('SELECT * FROM farmers WHERE category in' + levels_string)
-        return render_template('farmers.html', results=results, username=username)
+        return render_template('farmers.html', results=results, username=username, level=level)
     else:
+        flash('Não autorizado!')
         return redirect('/login', code=302)
 
 
