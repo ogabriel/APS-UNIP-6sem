@@ -14,11 +14,11 @@ Deverá haver vários níveis de autenticação, nível 1, onde todos tem acesso
 
 TODO
 -----------
-- Definir como será executado
-- Fazer Proof of Concept do conceito do semestre
-- Fazer o algoritmo funcionar
-- Construir a interface
-- Construir a hierarquia de níveis
+- ~Definir como será executado~
+- ~Fazer Proof of Concept do conceito do semestre~
+- ~Fazer o algoritmo funcionar~
+- ~Construir a interface~
+- ~Construir a hierarquia de níveis~
 
 Tools/Languages
 -----------
