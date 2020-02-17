@@ -20,6 +20,11 @@ TODO
 - ~Construir a interface~
 - ~Construir a hierarquia de níveis~
 
+How to use
+-----------
+- pip install -r requirements.txt
+- FLASK_APP=run.py flask run
+
 Tools/Languages
 -----------
 - Python
